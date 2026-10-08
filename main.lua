@@ -1,592 +1,418 @@
--- ========================================================
---                 DANZZY MENU PREMIUM
--- ========================================================
+--// DANZZY RUSUH - SAFE VEHICLE MENU
 
 local Players = game:GetService("Players")
-local Lighting = game:GetService("Lighting")
-local UserInputService = game:GetService("UserInputService")
+local Workspace = game:GetService("Workspace")
 
-local LocalPlayer = Players.LocalPlayer
+local player = Players.LocalPlayer
+local playerGui = player:WaitForChild("PlayerGui")
 
--- ========================================================
--- SETTINGS
--- ========================================================
-
-_G.H42 = {
-    AutoFarm = false,
-    Fullbright = false,
-    InfiniteJump = false,
-    WalkSpeed = 16
-}
-
--- ========================================================
+--==================================================
 -- GUI
--- ========================================================
+--==================================================
 
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "Danzzy_MENU"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+local gui = Instance.new("ScreenGui")
+gui.Name = "DanzzyRusuh"
+gui.ResetOnSpawn = false
+gui.Parent = playerGui
 
-local Main = Instance.new("Frame")
-Main.Parent = ScreenGui
-Main.Size = UDim2.fromOffset(470, 455)
-Main.Position = UDim2.new(0.5, -235, 0.5, -227)
-Main.BackgroundColor3 = Color3.fromRGB(18, 20, 28)
-Main.BorderSizePixel = 0
+--==================================================
+-- MAIN MENU
+--==================================================
 
-Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 12)
+local main = Instance.new("Frame")
+main.Name = "MainMenu"
+main.Size = UDim2.fromOffset(280, 330)
+main.Position = UDim2.new(0.5, -140, 0.5, -165)
+main.BackgroundColor3 = Color3.fromRGB(15, 10, 25)
+main.BorderSizePixel = 0
+main.Active = true
+main.Draggable = true
+main.Parent = gui
 
-local Stroke = Instance.new("UIStroke")
-Stroke.Parent = Main
-Stroke.Color = Color3.fromRGB(75, 85, 110)
-Stroke.Thickness = 1.5
+local corner = Instance.new("UICorner")
+corner.CornerRadius = UDim.new(0, 12)
+corner.Parent = main
 
--- ========================================================
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(130, 70, 255)
+stroke.Thickness = 2
+stroke.Parent = main
+
+--==================================================
 -- HEADER
--- ========================================================
+--==================================================
 
-local Header = Instance.new("Frame")
-Header.Parent = Main
-Header.Size = UDim2.new(1, 0, 0, 65)
-Header.BackgroundColor3 = Color3.fromRGB(25, 28, 39)
-Header.BorderSizePixel = 0
+local header = Instance.new("Frame")
+header.Size = UDim2.new(1, 0, 0, 45)
+header.BackgroundColor3 = Color3.fromRGB(25, 15, 45)
+header.BorderSizePixel = 0
+header.Parent = main
 
-Instance.new("UICorner", Header).CornerRadius = UDim.new(0, 12)
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 12)
+headerCorner.Parent = header
 
-local Title = Instance.new("TextLabel")
-Title.Parent = Header
-Title.Size = UDim2.new(1, -120, 0, 30)
-Title.Position = UDim2.fromOffset(18, 8)
-Title.BackgroundTransparency = 1
-Title.Text = "DANZZY MENU"
-Title.TextColor3 = Color3.fromRGB(255,255,255)
-Title.TextSize = 20
-Title.Font = Enum.Font.GothamBold
-Title.TextXAlignment = Enum.TextXAlignment.Left
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, -90, 1, 0)
+title.Position = UDim2.fromOffset(12, 0)
+title.BackgroundTransparency = 1
+title.Text = "⚡ DANZZY RUSUH"
+title.TextColor3 = Color3.fromRGB(220, 200, 255)
+title.TextSize = 14
+title.Font = Enum.Font.GothamBold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = header
 
-local SubTitle = Instance.new("TextLabel")
-SubTitle.Parent = Header
-SubTitle.Size = UDim2.new(1, -120, 0, 20)
-SubTitle.Position = UDim2.fromOffset(19, 36)
-SubTitle.BackgroundTransparency = 1
-SubTitle.Text = "PREMIUM CONTROL PANEL"
-SubTitle.TextColor3 = Color3.fromRGB(145,150,170)
-SubTitle.TextSize = 10
-SubTitle.Font = Enum.Font.Gotham
-SubTitle.TextXAlignment = Enum.TextXAlignment.Left
+--==================================================
+-- HIDE BUTTON
+--==================================================
 
--- ========================================================
--- HIDE
--- ========================================================
+local hideButton = Instance.new("TextButton")
+hideButton.Size = UDim2.fromOffset(55, 28)
+hideButton.Position = UDim2.new(1, -65, 0, 8)
+hideButton.BackgroundColor3 = Color3.fromRGB(70, 40, 110)
+hideButton.Text = "HIDE"
+hideButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+hideButton.TextSize = 10
+hideButton.Font = Enum.Font.GothamBold
+hideButton.BorderSizePixel = 0
+hideButton.Parent = header
 
-local HideButton = Instance.new("TextButton")
-HideButton.Parent = Header
-HideButton.Size = UDim2.fromOffset(34, 30)
-HideButton.Position = UDim2.new(1, -80, 0, 16)
-HideButton.Text = "−"
-HideButton.TextSize = 20
-HideButton.Font = Enum.Font.GothamBold
-HideButton.TextColor3 = Color3.new(1,1,1)
-HideButton.BackgroundColor3 = Color3.fromRGB(55,60,75)
-HideButton.BorderSizePixel = 0
+local hideCorner = Instance.new("UICorner")
+hideCorner.CornerRadius = UDim.new(0, 6)
+hideCorner.Parent = hideButton
 
-Instance.new("UICorner", HideButton).CornerRadius = UDim.new(0,6)
+--==================================================
+-- OPEN BUTTON
+--==================================================
 
--- ========================================================
--- CLOSE
--- ========================================================
+local openButton = Instance.new("TextButton")
+openButton.Name = "OpenButton"
+openButton.Size = UDim2.fromOffset(65, 65)
+openButton.Position = UDim2.new(0.03, 0, 0.5, 0)
+openButton.BackgroundColor3 = Color3.fromRGB(100, 45, 190)
+openButton.Text = "OPEN"
+openButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+openButton.TextSize = 11
+openButton.Font = Enum.Font.GothamBold
+openButton.BorderSizePixel = 0
+openButton.Active = true
+openButton.Draggable = true
+openButton.Visible = false
+openButton.Parent = gui
 
-local Close = Instance.new("TextButton")
-Close.Parent = Header
-Close.Size = UDim2.fromOffset(34, 30)
-Close.Position = UDim2.new(1, -40, 0, 16)
-Close.Text = "X"
-Close.TextSize = 13
-Close.Font = Enum.Font.GothamBold
-Close.TextColor3 = Color3.new(1,1,1)
-Close.BackgroundColor3 = Color3.fromRGB(190,45,45)
-Close.BorderSizePixel = 0
+local openCorner = Instance.new("UICorner")
+openCorner.CornerRadius = UDim.new(1, 0)
+openCorner.Parent = openButton
 
-Instance.new("UICorner", Close).CornerRadius = UDim.new(0,6)
+local openStroke = Instance.new("UIStroke")
+openStroke.Color = Color3.fromRGB(180, 100, 255)
+openStroke.Thickness = 2
+openStroke.Parent = openButton
 
--- ========================================================
+--==================================================
+-- HIDE / OPEN
+--==================================================
+
+hideButton.MouseButton1Click:Connect(function()
+	main.Visible = false
+	openButton.Visible = true
+end)
+
+openButton.MouseButton1Click:Connect(function()
+	main.Visible = true
+	openButton.Visible = false
+end)
+
+--==================================================
 -- STATUS
--- ========================================================
+--==================================================
 
-local Status = Instance.new("TextLabel")
-Status.Parent = Main
-Status.Size = UDim2.new(1, -36, 0, 25)
-Status.Position = UDim2.fromOffset(18, 75)
-Status.BackgroundTransparency = 1
-Status.Text = "● DANZZY SYSTEM READY"
-Status.TextColor3 = Color3.fromRGB(80,220,120)
-Status.TextSize = 11
-Status.Font = Enum.Font.GothamBold
-Status.TextXAlignment = Enum.TextXAlignment.Left
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1, -20, 0, 35)
+status.Position = UDim2.fromOffset(10, 52)
+status.BackgroundTransparency = 1
+status.Text = "STATUS: Siap"
+status.TextColor3 = Color3.fromRGB(180, 160, 210)
+status.TextSize = 10
+status.Font = Enum.Font.Gotham
+status.Parent = main
 
--- ========================================================
--- BUTTON CREATOR
--- ========================================================
+--==================================================
+-- BUTTON HELPER
+--==================================================
 
-local function Button(text, position)
+local function makeButton(text, y)
 
-    local B = Instance.new("TextButton")
-    B.Parent = Main
-    B.Size = UDim2.fromOffset(215, 40)
-    B.Position = position
-    B.BackgroundColor3 = Color3.fromRGB(43,47,60)
-    B.BorderSizePixel = 0
-    B.Text = text
-    B.TextColor3 = Color3.fromRGB(235,235,235)
-    B.TextSize = 11
-    B.Font = Enum.Font.GothamBold
-    B.AutoButtonColor = false
+	local button = Instance.new("TextButton")
 
-    Instance.new("UICorner", B).CornerRadius = UDim.new(0,7)
+	button.Size = UDim2.new(1, -30, 0, 42)
+	button.Position = UDim2.fromOffset(15, y)
 
-    local S = Instance.new("UIStroke")
-    S.Parent = B
-    S.Color = Color3.fromRGB(65,70,88)
-    S.Thickness = 1
+	button.BackgroundColor3 =
+		Color3.fromRGB(55, 30, 90)
 
-    B.MouseEnter:Connect(function()
-        if not B:GetAttribute("Active") then
-            B.BackgroundColor3 = Color3.fromRGB(55,60,75)
-        end
-    end)
+	button.TextColor3 =
+		Color3.fromRGB(255, 255, 255)
 
-    B.MouseLeave:Connect(function()
-        if not B:GetAttribute("Active") then
-            B.BackgroundColor3 = Color3.fromRGB(43,47,60)
-        end
-    end)
+	button.TextSize = 11
+	button.Font = Enum.Font.GothamBold
+	button.Text = text
+	button.BorderSizePixel = 0
 
-    return B
+	button.Parent = main
+
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, 7)
+	c.Parent = button
+
+	return button
 end
 
-local function SetButton(B, text, active)
+--==================================================
+-- CHARACTER
+--==================================================
 
-    B.Text = text
-    B:SetAttribute("Active", active)
+local function getCharacter()
 
-    if active then
-        B.BackgroundColor3 = Color3.fromRGB(45,150,75)
-    else
-        B.BackgroundColor3 = Color3.fromRGB(43,47,60)
-    end
+	local character = player.Character
 
+	if not character then
+		return nil
+	end
+
+	local root =
+		character:FindFirstChild("HumanoidRootPart")
+
+	if not root then
+		return nil
+	end
+
+	return character, root
 end
 
--- ========================================================
--- MAIN BUTTONS
--- ========================================================
+--==================================================
+-- FIND VEHICLE
+--==================================================
 
-local AutoFarm = Button(
-    "Auto Farm : OFF",
-    UDim2.fromOffset(18,110)
-)
+local function getNearestVehicle()
 
-local Fullbright = Button(
-    "Fullbright : OFF",
-    UDim2.fromOffset(237,110)
-)
+	local character, root = getCharacter()
 
-local InfiniteJump = Button(
-    "Infinite Jump : OFF",
-    UDim2.fromOffset(18,157)
-)
+	if not character then
+		return nil
+	end
 
-local SpeedNormal = Button(
-    "Speed Normal : 16",
-    UDim2.fromOffset(237,157)
-)
+	local nearest = nil
+	local nearestDistance = math.huge
 
-local SpeedFast = Button(
-    "Speed Cepat : 50",
-    UDim2.fromOffset(18,204)
-)
+	for _, model in ipairs(
+		Workspace:GetDescendants()
+	) do
 
-local SpeedSuper = Button(
-    "Speed Super : 100",
-    UDim2.fromOffset(237,204)
-)
+		if model:IsA("Model")
+			and model ~= character then
 
--- ========================================================
--- TELEPORT
--- ========================================================
+			local seat =
+				model:FindFirstChildWhichIsA(
+					"VehicleSeat",
+					true
+				)
 
-local Rumah = Button(
-    "Teleport : Rumah",
-    UDim2.fromOffset(18,251)
-)
+			if seat then
 
-local Brewog = Button(
-    "Teleport : Brewog",
-    UDim2.fromOffset(237,251)
-)
+				local distance =
+					(seat.Position - root.Position).Magnitude
 
-local Maxgen = Button(
-    "Teleport : Maxgen",
-    UDim2.fromOffset(18,298)
-)
+				if distance < nearestDistance then
 
-local GetCoord = Button(
-    "GET COORDINATE",
-    UDim2.fromOffset(237,298)
-)
+					nearestDistance = distance
+					nearest = model
 
--- ========================================================
--- AUTO FARM
--- ========================================================
+				end
+			end
+		end
+	end
 
-AutoFarm.MouseButton1Click:Connect(function()
-
-    _G.H42.AutoFarm = not _G.H42.AutoFarm
-
-    SetButton(
-        AutoFarm,
-        _G.H42.AutoFarm
-            and "Auto Farm : ON"
-            or "Auto Farm : OFF",
-        _G.H42.AutoFarm
-    )
-
-    Status.Text = _G.H42.AutoFarm
-        and "● AUTO FARM : ON"
-        or "● DANZZY SYSTEM READY"
-
-end)
-
--- ========================================================
--- FULLBRIGHT
--- ========================================================
-
-Fullbright.MouseButton1Click:Connect(function()
-
-    _G.H42.Fullbright = not _G.H42.Fullbright
-
-    if _G.H42.Fullbright then
-
-        Lighting.Brightness = 3
-        Lighting.ClockTime = 14
-        Lighting.FogEnd = 100000
-
-    else
-
-        Lighting.Brightness = 1
-        Lighting.FogEnd = 1000
-
-    end
-
-    SetButton(
-        Fullbright,
-        _G.H42.Fullbright
-            and "Fullbright : ON"
-            or "Fullbright : OFF",
-        _G.H42.Fullbright
-    )
-
-end)
-
--- ========================================================
--- INFINITE JUMP
--- ========================================================
-
-InfiniteJump.MouseButton1Click:Connect(function()
-
-    _G.H42.InfiniteJump = not _G.H42.InfiniteJump
-
-    SetButton(
-        InfiniteJump,
-        _G.H42.InfiniteJump
-            and "Infinite Jump : ON"
-            or "Infinite Jump : OFF",
-        _G.H42.InfiniteJump
-    )
-
-end)
-
-UserInputService.JumpRequest:Connect(function()
-
-    if not _G.H42.InfiniteJump then
-        return
-    end
-
-    local Character = LocalPlayer.Character
-    local Humanoid = Character
-        and Character:FindFirstChildOfClass("Humanoid")
-
-    if Humanoid then
-        Humanoid:ChangeState(
-            Enum.HumanoidStateType.Jumping
-        )
-    end
-
-end)
-
--- ========================================================
--- SPEED 16
--- ========================================================
-
-SpeedNormal.MouseButton1Click:Connect(function()
-
-    local Character = LocalPlayer.Character
-    local Humanoid = Character
-        and Character:FindFirstChildOfClass("Humanoid")
-
-    if Humanoid then
-
-        Humanoid.WalkSpeed = 16
-        _G.H42.WalkSpeed = 16
-        Status.Text = "● SPEED : 16"
-
-    end
-
-end)
-
--- ========================================================
--- SPEED 50
--- ========================================================
-
-SpeedFast.MouseButton1Click:Connect(function()
-
-    local Character = LocalPlayer.Character
-    local Humanoid = Character
-        and Character:FindFirstChildOfClass("Humanoid")
-
-    if Humanoid then
-
-        Humanoid.WalkSpeed = 50
-        _G.H42.WalkSpeed = 50
-        Status.Text = "● SPEED : 50"
-
-    end
-
-end)
-
--- ========================================================
--- SPEED 100
--- ========================================================
-
-SpeedSuper.MouseButton1Click:Connect(function()
-
-    local Character = LocalPlayer.Character
-    local Humanoid = Character
-        and Character:FindFirstChildOfClass("Humanoid")
-
-    if Humanoid then
-
-        Humanoid.WalkSpeed the 2000
-        _G.H42.WalkSpeed = 1000
-        Status.Text = "● SPEED : 100"
-
-    end
-
-end)
-
--- ========================================================
--- GET COORDINATE
--- ========================================================
-
-GetCoord.MouseButton1Click:Connect(function()
-
-    local Character = LocalPlayer.Character
-    local Root = Character
-        and Character:FindFirstChild("HumanoidRootPart")
-
-    if not Root then
-        Status.Text = "● CHARACTER BELUM SIAP"
-        return
-    end
-
-    local P = Root.Position
-
-    print("================================")
-    print("       DANZZY COORDINATE")
-    print("================================")
-    print("X =", P.X)
-    print("Y =", P.Y)
-    print("Z =", P.Z)
-    print("================================")
-
-    Status.Text = string.format(
-        "X %.1f | Y %.1f | Z %.1f",
-        P.X,
-        P.Y,
-        P.Z
-    )
-
-end)
-
--- ========================================================
--- TELEPORT FUNCTION
--- ========================================================
-
-local function TeleportTo(Name)
-
-    local Target = workspace:FindFirstChild(Name, true)
-
-    if not Target then
-
-        Status.Text = "● " .. Name .. " : TIDAK DITEMUKAN"
-        warn("[Danzzy] Lokasi tidak ditemukan:", Name)
-
-        return
-    end
-
-    local Character = LocalPlayer.Character
-    local Root = Character
-        and Character:FindFirstChild("HumanoidRootPart")
-
-    if not Root then
-        Status.Text = "● CHARACTER BELUM SIAP"
-        return
-    end
-
-    local Part
-
-    if Target:IsA("BasePart") then
-        Part = Target
-
-    elseif Target:IsA("Model") then
-        Part = Target.PrimaryPart
-            or Target:FindFirstChildWhichIsA(
-                "BasePart",
-                true
-            )
-    end
-
-    if not Part then
-
-        Status.Text = "● " .. Name .. " : PART TIDAK ADA"
-        return
-
-    end
-
-    Root.CFrame = Part.CFrame + Vector3.new(0,3,0)
-
-    Status.Text = "● TELEPORT : " .. Name
-
+	return nearest
 end
 
--- ========================================================
--- TELEPORT BUTTONS
--- ========================================================
+--==================================================
+-- LIFT VEHICLE
+--==================================================
 
-Rumah.MouseButton1Click:Connect(function()
-    TeleportTo("Rumah")
+local liftButton = makeButton(
+	"🚗 ANGKAT MOBIL TERDEKAT",
+	100
+)
+
+local liftedVehicle = nil
+local originalCFrame = nil
+
+liftButton.MouseButton1Click:Connect(function()
+
+	-- TURUNKAN
+	if liftedVehicle
+		and liftedVehicle.Parent then
+
+		if originalCFrame then
+			liftedVehicle:PivotTo(
+				originalCFrame
+			)
+		end
+
+		liftedVehicle = nil
+		originalCFrame = nil
+
+		liftButton.Text =
+			"🚗 ANGKAT MOBIL TERDEKAT"
+
+		liftButton.BackgroundColor3 =
+			Color3.fromRGB(55, 30, 90)
+
+		status.Text =
+			"STATUS: Mobil diturunkan"
+
+		status.TextColor3 =
+			Color3.fromRGB(100, 255, 150)
+
+		return
+	end
+
+	local vehicle =
+		getNearestVehicle()
+
+	if not vehicle then
+
+		status.Text =
+			"STATUS: Mobil tidak ditemukan"
+
+		status.TextColor3 =
+			Color3.fromRGB(255, 80, 80)
+
+		return
+	end
+
+	local character, root =
+		getCharacter()
+
+	if not character then
+		return
+	end
+
+	liftedVehicle = vehicle
+	originalCFrame =
+		vehicle:GetPivot()
+
+	vehicle:PivotTo(
+		root.CFrame
+		* CFrame.new(0, 10, -4)
+	)
+
+	liftButton.Text =
+		"⬇️ TURUNKAN MOBIL"
+
+	liftButton.BackgroundColor3 =
+		Color3.fromRGB(30, 150, 80)
+
+	status.Text =
+		"STATUS: Mobil berhasil diangkat"
+
+	status.TextColor3 =
+		Color3.fromRGB(100, 255, 150)
 end)
 
-Brewog.MouseButton1Click:Connect(function()
-    TeleportTo("Brewog")
+--==================================================
+-- TP TO VEHICLE
+--==================================================
+
+local tpButton = makeButton(
+	"🚙 TP KE MOBIL TERDEKAT",
+	150
+)
+
+tpButton.MouseButton1Click:Connect(function()
+
+	local character, root =
+		getCharacter()
+
+	if not character then
+		return
+	end
+
+	local vehicle =
+		getNearestVehicle()
+
+	if not vehicle then
+
+		status.Text =
+			"STATUS: Mobil tidak ditemukan"
+
+		status.TextColor3 =
+			Color3.fromRGB(255, 80, 80)
+
+		return
+	end
+
+	root.CFrame =
+		vehicle:GetPivot()
+		* CFrame.new(0, 3, 5)
+
+	status.Text =
+		"STATUS: Teleport ke mobil"
+
+	status.TextColor3 =
+		Color3.fromRGB(100, 200, 255)
 end)
 
-Maxgen.MouseButton1Click:Connect(function()
-    TeleportTo("Maxgen")
+--==================================================
+-- FLIP VEHICLE
+--==================================================
+
+local flipButton = makeButton(
+	"🔄 FLIP MOBIL TERDEKAT",
+	200
+)
+
+flipButton.MouseButton1Click:Connect(function()
+
+	local vehicle =
+		getNearestVehicle()
+
+	if not vehicle then
+
+		status.Text =
+			"STATUS: Mobil tidak ditemukan"
+
+		status.TextColor3 =
+			Color3.fromRGB(255, 80, 80)
+
+		return
+	end
+
+	local cf =
+		vehicle:GetPivot()
+
+	vehicle:PivotTo(
+		cf * CFrame.Angles(0, 0, math.pi)
+	)
+
+	status.Text =
+		"STATUS: Mobil berhasil di-flip"
+
+	status.TextColor3 =
+		Color3.fromRGB(255, 180, 80)
 end)
 
--- ========================================================
--- SHOW BUTTON
--- ========================================================
+--==================================================
+-- CLOSE
+--==================================================
 
-local ShowButton = Instance.new("TextButton")
-ShowButton.Parent = ScreenGui
-ShowButton.Size = UDim2.fromOffset(55,55)
-ShowButton.Position = UDim2.new(0,20,0.5,-25)
-ShowButton.Text = "D"
-ShowButton.TextSize = 22
-ShowButton.Font = Enum.Font.GothamBold
-ShowButton.TextColor3 = Color3.fromRGB(255,255,255)
-ShowButton.BackgroundColor3 = Color3.fromRGB(30,33,43)
-ShowButton.BorderSizePixel = 0
-ShowButton.Visible = false
+local closeButton = makeButton(
+	"✕ TUTUP MENU",
+	250
+)
 
-Instance.new("UICorner", ShowButton).CornerRadius = UDim.new(1,0)
-
--- ========================================================
--- HIDE / SHOW
--- ========================================================
-
-HideButton.MouseButton1Click:Connect(function()
-
-    Main.Visible = false
-    ShowButton.Visible = true
-
+closeButton.MouseButton1Click:Connect(function()
+	gui:Destroy()
 end)
-
-ShowButton.MouseButton1Click:Connect(function()
-
-    Main.Visible = true
-    ShowButton.Visible = false
-
-end)
-
-Close.MouseButton1Click:Connect(function()
-
-    ScreenGui:Destroy()
-
-end)
-
--- ========================================================
--- DRAG MENU
--- ========================================================
-
-local Dragging = false
-local DragStart
-local StartPosition
-
-Header.InputBegan:Connect(function(Input)
-
-    if Input.UserInputType == Enum.UserInputType.MouseButton1
-    or Input.UserInputType == Enum.UserInputType.Touch then
-
-        Dragging = true
-        DragStart = Input.Position
-        StartPosition = Main.Position
-
-    end
-
-end)
-
-UserInputService.InputChanged:Connect(function(Input)
-
-    if not Dragging then
-        return
-    end
-
-    if Input.UserInputType == Enum.UserInputType.MouseMovement
-    or Input.UserInputType == Enum.UserInputType.Touch then
-
-        local Delta = Input.Position - DragStart
-
-        Main.Position = UDim2.new(
-            StartPosition.X.Scale,
-            StartPosition.X.Offset + Delta.X,
-            StartPosition.Y.Scale,
-            StartPosition.Y.Offset + Delta.Y
-        )
-
-    end
-
-end)
-
-UserInputService.InputEnded:Connect(function(Input)
-
-    if Input.UserInputType == Enum.UserInputType.MouseButton1
-    or Input.UserInputType == Enum.UserInputType.Touch then
-
-        Dragging = false
-
-    end
-
-end)
-
--- ========================================================
--- READY
--- ========================================================
-
-print("================================")
-print("       DANZZY MENU READY")
-print("================================")
